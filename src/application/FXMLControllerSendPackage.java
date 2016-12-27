@@ -201,6 +201,7 @@ public class FXMLControllerSendPackage implements Initializable
 	{
 		p.setSmartPostRoute(source, destination);
 		MihoCorporation.getInstance().getWarehouse().addPackage(p);
+		EventLogging.getInstance().createPackage(p);
 		this.textareaMessages.setText("Paketti '" + p.getItem().getName() + "' lisättiin varastoon");
 	}
 

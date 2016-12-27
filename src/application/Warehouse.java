@@ -20,7 +20,6 @@ public class Warehouse
 	public Warehouse addPackage(Package p)
 	{
 		this.inventory.add(p);
-		EventLogging.getInstance().createPackage(p);
 		return this;
 	}
 
