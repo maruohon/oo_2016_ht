@@ -51,6 +51,7 @@ public class FXMLControllerMain implements Initializable
 	 */
 	private void resetSmartPostSelection()
 	{
+		this.postsOnMap.clear();
 		this.postsToAdd.clear();
 		this.postsToAdd.addAll(MihoCorporation.getInstance().getSmartPosts());
 
@@ -88,7 +89,7 @@ public class FXMLControllerMain implements Initializable
 			this.postsToAdd.remove(post);
 			this.choiceSmartPost.getItems().remove(post);
 			this.choiceSmartPost.getSelectionModel().clearSelection();
-			//this.choiceSmartPost.setValue(null);
+			this.choiceSmartPost.setValue(null);
 			this.postsOnMap.add(post);
 		}
 	}
@@ -96,9 +97,13 @@ public class FXMLControllerMain implements Initializable
 	@FXML
 	public void handleButtonAddAllSmartPosts(ActionEvent event)
 	{
-		for (SmartPost post : this.postsToAdd)
+		int size = this.postsToAdd.size();
+
+		for (int i = 0; i < size; i++)
 		{
-			this.addSmartPostToMap(post);
+			// Always get the first element, because they get removed from the list
+			// inside the method call!
+			this.addSmartPostToMap(this.postsToAdd.get(0));
 		}
 	}
 
@@ -178,6 +183,17 @@ public class FXMLControllerMain implements Initializable
 		points.add(dest.getLocation().getLongitude());
 
 		String script = "document.createPath(" + points + ", 'red', " + p.getPackageClass() + ")";
-		this.webviewMap.getEngine().executeScript(script);
+		Object o = this.webviewMap.getEngine().executeScript(script);
+		int dist = 0;
+
+		try
+		{
+			dist = (int) o;
+		}
+		catch (Exception e)
+		{
+		}
+
+		EventLogging.getInstance().sendPackage(p, dist);
 	}
 }

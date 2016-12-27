@@ -56,7 +56,7 @@
       <ComboBox fx:id="choiceboxSourcePost" layoutX="14.0" layoutY="260.0" prefHeight="26.0" prefWidth="239.0" promptText="Automaatti" />
       <Label layoutX="15.0" layoutY="322.0" text="Kohdeautomaatti:" />
       <ComboBox fx:id="choiceboxTargetPost" layoutX="14.0" layoutY="378.0" prefHeight="26.0" prefWidth="239.0" promptText="Automaatti" />
-      <Button fx:id="buttonSendPackage" layoutX="18.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleButtonSendPackage" text="Lähetä paketti" />
+      <Button fx:id="buttonSendPackage" layoutX="18.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleButtonCreatePackage" text="Lähetä paketti" />
       <ComboBox fx:id="choiceboxSourceCity" layoutX="14.0" layoutY="227.0" prefHeight="26.0" prefWidth="239.0" promptText="Lähtökaupunki" />
       <ComboBox fx:id="choiceboxTargetCity" layoutX="15.0" layoutY="345.0" prefHeight="26.0" prefWidth="239.0" promptText="Kohdekaupunki" />
       <TextArea fx:id="textareaMessages" layoutX="276.0" layoutY="398.0" prefHeight="72.0" prefWidth="354.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="276.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="398.0" />

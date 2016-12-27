@@ -53,6 +53,7 @@ public class FXMLControllerSendPackage implements Initializable
 		this.choiceboxItem.getItems().clear();
 		this.choiceboxItem.getItems().addAll(MihoCorporation.getInstance().getItems());
 
+		// Create change listeners to update the SmartPost station lists when a city is selected
 		this.choiceboxSourceCity.getSelectionModel().selectedItemProperty().addListener(
 			new ChangeListener<String>()
 			{
@@ -91,6 +92,10 @@ public class FXMLControllerSendPackage implements Initializable
 									"on tämä hitain mahdollinen kuljetusmuoto paketille. ");
 	}
 
+	/**
+	 * When a radio button is clicked, first reset all of them to false and
+	 * then set the one that was clicked on to true.
+	 */
 	@FXML
 	void handleRadioBoxPackageClass(ActionEvent event)
 	{
@@ -107,6 +112,9 @@ public class FXMLControllerSendPackage implements Initializable
 		this.clearItemFields();
 	}
 
+	/**
+	 * Create a new item and add it to the list of available items
+	 */
 	@FXML
 	void handleButtonCreateItem(ActionEvent event)
 	{
@@ -125,6 +133,7 @@ public class FXMLControllerSendPackage implements Initializable
 
 			MihoCorporation.getInstance().addItem(item);
 			this.choiceboxItem.getItems().add(item);
+			EventLogging.getInstance().createItem(item);
 
 			this.clearItemFields();
 			this.choiceboxItem.setValue(item);
@@ -135,8 +144,12 @@ public class FXMLControllerSendPackage implements Initializable
 		}
 	}
 
+	/**
+	 * Create a new package from the selected item and SmartPost stations
+	 * and add the package to the warehouse.
+	 */
 	@FXML
-	void handleButtonSendPackage(ActionEvent event)
+	void handleButtonCreatePackage(ActionEvent event)
 	{
 		this.clearMessageArea();
 
@@ -166,7 +179,7 @@ public class FXMLControllerSendPackage implements Initializable
 				if (p != null)
 				{
 					p.setItem(item);
-					this.sendPackage(p, source, destination);
+					this.addPackageToWarehouse(p, source, destination);
 				}
 				else
 				{
@@ -184,7 +197,7 @@ public class FXMLControllerSendPackage implements Initializable
 		}
 	}
 
-	private void sendPackage(Package p, SmartPost source, SmartPost destination)
+	private void addPackageToWarehouse(Package p, SmartPost source, SmartPost destination)
 	{
 		p.setSmartPostRoute(source, destination);
 		MihoCorporation.getInstance().getWarehouse().addPackage(p);
@@ -206,6 +219,11 @@ public class FXMLControllerSendPackage implements Initializable
 		this.textareaMessages.setText("");
 	}
 
+	/**
+	 * Update the given ComboBox to contain only the SmartPost stations from the given city.
+	 * @param box
+	 * @param city
+	 */
 	private void updateSmartPosts(ComboBox<SmartPost> box, String city)
 	{
 		box.getItems().clear();
